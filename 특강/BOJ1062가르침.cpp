@@ -4,19 +4,19 @@
 using namespace std;
 
 int n, k;
-string arr[60];
-bool check[30];
+string arr[50];
+bool check[26];
 int result;
 
 
 /*
-¸î°³ÀÇ ´Ü¾î¸¦ ¹è¿ï ¼ö ÀÖ´ÂÁö ÀÇ ÃÖ´ñ°ª.
+ëª‡ê°œì˜ ë‹¨ì–´ë¥¼ ë°°ìš¸ ìˆ˜ ìˆëŠ”ì§€ ì˜ ìµœëŒ“ê°’.
 */
 
 
-void solve(int num) {
+void solve(int c,int num) {
 
-	//k°³¸¦ ´Ù ¹è¿î°æ¿ì
+	//kê°œë¥¼ ë‹¤ ë°°ìš´ê²½ìš°
 	if (num == k) {
 
 		int temp = 0;
@@ -38,10 +38,10 @@ void solve(int num) {
 	}
 
 	else {
-		for (int i = 0; i < 26; i++) {
+		for (int i = c; i < 26; i++) {
 			if (!check[i]) {
 				check[i] = true;
-				solve(num + 1);
+				solve(i,num + 1);
 				check[i] = false;
 			}
 		 }
@@ -81,7 +81,7 @@ int main() {
 	check['n' - 'a'] = true;
 	check['t' - 'a'] = true;
 
-	solve(0);
+	solve(0,0);
 
 	cout << result;
 
