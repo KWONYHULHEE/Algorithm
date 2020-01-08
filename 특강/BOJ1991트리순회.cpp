@@ -23,20 +23,20 @@ void postorder(char x) {
 
 void inorder(char x) {
 
-	//ÀÚ½ÄÀÌ Á¸ÀçÇÏ°í ¿ŞÂÊ ÀÚ½ÄÀÌ¶ó¸é
+	//ìì‹ì´ ì¡´ì¬í•˜ê³  ì™¼ìª½ ìì‹ì´ë¼ë©´
 
 	if (tree[x].size() && tree[x][0].second)
 		inorder(tree[x][0].first);
 
 	printf("%c", x);
 
-	//¿À¸¥ÂÊ ÀÚ½Ä¸¸ ÀÖ´Ù¸é
+	//ì˜¤ë¥¸ìª½ ìì‹ë§Œ ìˆë‹¤ë©´
 
 	if (tree[x].size() && !tree[x][0].second)
 
 		inorder(tree[x][0].first);
 
-	//¾çÂÊ ÀÚ½Ä ´Ù ÀÖ´Ù¸é
+	//ì–‘ìª½ ìì‹ ë‹¤ ìˆë‹¤ë©´
 
 	else if (tree[x].size() == 2)
 
