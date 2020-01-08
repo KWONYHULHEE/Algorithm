@@ -1,8 +1,8 @@
 
 /*
 
- ╣╔юлемюг ╟Ё╪Ж  n ©║ 4╦╕ ╟Жгя е╘╠Б╦╦е╜ ╧л╦╝ ╠╦╟ё гу ф╝╦╝юг ╟Ь╟ёю╩ гр╢Г.
- https://m.blog.naver.com/ndb796/221282210534 бЭ╟М
+ К█╟Л²╢М└╟Л²≤ Й╟°Л┬≤  n Л≈░ 4К╔╪ ЙЁ╠М∙° М│╛Й╦╟К╖▄М│╪ К╞╦К╕╛ Й╣╛Й╟└ М∙╘ М┼╦К╕╛Л²≤ ЙЁ╣Й╟└Л²└ М∙═К▀╧.
+ https://m.blog.naver.com/ndb796/221282210534 Л╟╦ЙЁ═
 */
 
 #include <iostream>
@@ -20,31 +20,30 @@ const int INF = 87654321;
 long long N, M, K;
 long long seg[MAX * 4] = {};
 long long arr[MAX] = {};
-
 struct Segtree {
-	
-		long long query(int l, int r, int node, int nodeL, int nodeR) {
-		if (nodeL>r || nodeR<l) return 0;//гв╣Н©Ь
-		if (l <= nodeL && nodeR <= r) return seg[node];
-		int mid = (nodeL + nodeR) / 2;
-		return (query(l, r, node * 2, nodeL, mid) + query(l, r, node * 2 + 1, mid + 1, nodeR));
+
+	long long sum(int left, int right, int node, int start, int end) {
+		if (start > right || end < left) return 0;
+		if (left <= start && end <= right) return seg[node];
+		int mid = (start + end) / 2;
+		return (sum(left, right, node * 2, start, mid) + sum(left, right, node * 2 + 1, mid + 1, end));
 	}
 
-	long long update(int index, int value, int node, int S, int E) {
-		//index : ╪Жа╓го╟Мюзго╢б ЁК╣Е value : ╪Жа╓гр ╟╙
+	long long update(int index, int value, int node, int start, int end) {
 
-		if (index<S || E < index) return seg[node];
-		if (S == E) return seg[node] = value;
-		int mid = (S + E) / 2;
 
-		return seg[node] = (long long)update(index, value, node * 2, S, mid) + update(index, value, node * 2 + 1, mid + 1, E);
+		if (index < start || end < index) return seg[node];
+
+		if (start == end) return seg[node] = value;
+		int mid = (start + end) / 2;
+		return seg[node] = (long long)update(index, value, node * 2, start, mid) + update(index, value, node * 2 + 1, mid + 1, end);
 	}
 
-	long long init(int l, int r, int node) {
+	long long init(int start, int end, int node) {
 
-		if (l == r) return seg[node] = arr[l];
-		int mid = (l + r) / 2;
-		return seg[node] = init(l, mid, node * 2) + init(mid + 1, r, node * 2 + 1);
+		if (start == end) return seg[node] = arr[start];
+		int mid = (start + end) / 2;
+		return seg[node] = init(start, mid, node * 2) + init(mid + 1, end, node * 2 + 1);
 
 	}
 };
@@ -64,7 +63,7 @@ int main(void)
 		arr[i] = k;
 	}
 
-	Tree.init(1, N, 1);  //ф╝╦╝╠╦гЖ
+	Tree.init(1, N, 1);  //М┼╦К╕╛Й╣╛М≤└
 
 	long long a, b, c;
 	for (int i = 1; i <= M + K; i++) {
