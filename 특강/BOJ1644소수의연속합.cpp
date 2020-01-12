@@ -18,28 +18,25 @@ int main() {
 		for (int j = 2; j <=n /i; j++) {
 			arr[i*j] = 1;
 		}
-	}  //¼Ò¼ö¸é 0
+	}  //ì†Œìˆ˜ë©´ 0
 
 
 
-	for (int i = 2; i <= n; i++) {  // N±îÁö ¸ğµç ¼Ò¼ö¸¦ ÀúÀåÇÑ´Ù
+	for (int i = 2; i <= n; i++) {  // Nê¹Œì§€ ëª¨ë“  ì†Œìˆ˜ë¥¼ ì €ì¥í•œë‹¤
 		if (arr[i] == 0) {
 			v.push_back(i);
 		}
 	}
 
-	int sum = 0, head = 0, tail = 0;    // ºÎºĞÇÕ¹®Á¦Ã³·³ ÅõÆ÷ÀÎÅÍ·Î N°ú µ¿ÀÏÇÑ °ª °³¼ö¸¦ Ä«¿îÆÃ ÇÑ´Ù
+	int sum = 0, s = 0, e = 0;    // ë¶€ë¶„í•©ë¬¸ì œì²˜ëŸ¼ íˆ¬í¬ì¸í„°ë¡œ Nê³¼ ë™ì¼í•œ ê°’ ê°œìˆ˜ë¥¼ ì¹´ìš´íŒ… í•œë‹¤
 
-	for (int i = 0; i<v.size(); i++) {
-		sum += v[head++];
-		while (sum >n) {
-			sum -= v[tail++];
-		}
-		if (sum == n) {
-			//cout << arr[20];
-			answer++;
-		}
-	}
+	while(1){
+        if(sum >= n) sum -= v[s++];
+        else if(e == v.size()) break;
+        else sum += v[e++];
+        
+        if(sum == n) answer++;
+    }
 
 	cout << answer;
 
