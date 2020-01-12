@@ -1,35 +1,18 @@
 #include <iostream>
-#include <vector>
+#include<math.h>
 using namespace std;
-
-
 int main() {
+	int n;
 
-
-
-	int n, answer, temp;
-
-	while (cin>>n) {
-		answer = 1;
-		temp = 1;
-		while (1) {
-
-			if (temp%n== 0) {
-				printf("%d\n", answer);
+	while (cin >> n) {
+		int num=0;
+		for (int i = 1;; i++) {
+			num =num*10+1;
+			num = num % n;
+			if (num == 0) {
+				cout << i <<'\n';
 				break;
 			}
-			answer++;
-			temp *= 10;
-			temp++;
-		
-			temp = temp % n;
-		
 		}
 	}
-
-	return 0;
 }
-
-
-
-
