@@ -75,7 +75,7 @@ int main(void)
 		}
 
 		if (a == 2) {
-			long long ans = Tree.query(b, c, 1, 1, N);
+			long long ans = Tree.sum(b, c, 1, 1, N);
 			cout << ans << endl;
 			continue;
 		}
