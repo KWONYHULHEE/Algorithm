@@ -27,8 +27,6 @@ int main() {
 		}
 	}
 
-	dudwls
-
 	return 0;
 }
 
