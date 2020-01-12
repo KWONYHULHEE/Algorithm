@@ -1,6 +1,13 @@
 #include <iostream>
 #include<math.h>
 using namespace std;
+
+/*
+
+(이전 값 * 10 + 1)%n
+= 현재값 % n
+
+*/
 int main() {
 	int n;
 
