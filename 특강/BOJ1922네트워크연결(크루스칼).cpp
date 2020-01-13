@@ -4,25 +4,22 @@
 using namespace std;
 
 int n, m;
-vector <pair<int, pair<int,int>>> edge;
+vector <pair<int, pair<int, int>>> edge;
 int parent[100010];
 
 /*
-
-2. Å©·ç½ºÄ® ¾Ë°í¸®Áò µ¿ÀÛ(±¸Çö)¿ø¸® !
-
-- Å©·ç½ºÄ® ¾Ë°í¸®ÁòÀÇ Ç®ÀÌ¹æ¹ıÀ» Å©°Ô ¸î ´Ü°è·Î ³ª´©¾î¼­ ¾Ë¾Æº¸ÀÚ.
-1. ¸ğµç °£¼±µéÀÇ °¡ÁßÄ¡¸¦ ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄÇÑ´Ù.
-2. °¡ÁßÄ¡°¡ °¡Àå ÀÛÀº °£¼±À» ¼±ÅÃÇÑ´Ù.
-3. 2¿¡¼­ ¼±ÅÃÇÑ °£¼±ÀÌ ¿¬°áÇÏ·Á´Â 2°³ÀÇ ³ëµå°¡ ¾ÆÁ÷ ¼­·Î ¿¬°áµÇÁö ¾ÊÀº »óÅÂ¶ó¸é, 2°³ÀÇ ³ëµå¸¦ ¼­·Î ¿¬°áÇÑ´Ù.
-4. À§ÀÇ °úÁ¤À» ¹İº¹ÇÑ´Ù.
-
+2. í¬ë£¨ìŠ¤ì¹¼ ì•Œê³ ë¦¬ì¦˜ ë™ì‘(êµ¬í˜„)ì›ë¦¬ !
+- í¬ë£¨ìŠ¤ì¹¼ ì•Œê³ ë¦¬ì¦˜ì˜ í’€ì´ë°©ë²•ì„ í¬ê²Œ ëª‡ ë‹¨ê³„ë¡œ ë‚˜ëˆ„ì–´ì„œ ì•Œì•„ë³´ì.
+1. ëª¨ë“  ê°„ì„ ë“¤ì˜ ê°€ì¤‘ì¹˜ë¥¼ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬í•œë‹¤.
+2. ê°€ì¤‘ì¹˜ê°€ ê°€ì¥ ì‘ì€ ê°„ì„ ì„ ì„ íƒí•œë‹¤.
+3. 2ì—ì„œ ì„ íƒí•œ ê°„ì„ ì´ ì—°ê²°í•˜ë ¤ëŠ” 2ê°œì˜ ë…¸ë“œê°€ ì•„ì§ ì„œë¡œ ì—°ê²°ë˜ì§€ ì•Šì€ ìƒíƒœë¼ë©´, 2ê°œì˜ ë…¸ë“œë¥¼ ì„œë¡œ ì—°ê²°í•œë‹¤.
+4. ìœ„ì˜ ê³¼ì •ì„ ë°˜ë³µí•œë‹¤.
 */
 
- 
+
 int find(int x) {
 	if (x == parent[x]) return x;
-	else return parent[x] = find(parent[x]);  //°æ·Î¾ĞÃà
+	else return parent[x] = find(parent[x]);  //ê²½ë¡œì••ì¶•
 }
 
 void Union(int a, int b) {
@@ -52,19 +49,19 @@ int main()
 		edge.push_back({ c, { a,b } });
 	}
 
-	sort(edge.begin(), edge.end());  // ¿À¸§Â÷¼ø Á¤·Ä
+	sort(edge.begin(), edge.end());  // ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 	for (int i = 1; i <= n; i++) {
 		parent[i] = i;
 	}
 	int res = 0;
 
-	for (int i = 0; i < m; i++) {
-		if (sameparent(edge[i].second.first, edge[i].second.second) == false) { //¿¬°á¾ÈµÇÀÖÀ¸¸é
-			Union(edge[i].second.first, edge[i].second.second); //ÇÕÄ¡±â
-			res += edge[i].first;  //°¡ÁßÄ¡ ´õÇØÁÖ±â
+	for (int i = 0; i < edge.size(); i++) {
+		if (sameparent(edge[i].second.first, edge[i].second.second) == false) { //ì—°ê²°ì•ˆë˜ìˆìœ¼ë©´
+			Union(edge[i].second.first, edge[i].second.second); //í•©ì¹˜ê¸°
+			res += edge[i].first;  //ê°€ì¤‘ì¹˜ ë”í•´ì£¼ê¸°
 		}
 	}
-	
+
 
 	printf("%d", res);
 
