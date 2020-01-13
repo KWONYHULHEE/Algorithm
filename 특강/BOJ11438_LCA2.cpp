@@ -7,15 +7,15 @@ using namespace std;
 LCA 
 
 ac[x][i] = ac[ac[x][i-1]][i-1]
-ac[x][i]´Â xÀÇ 2^i¹øÂ° Á¶»óÀ» ÀÇ¹Ì
+ac[x][i]ëŠ” xì˜ 2^ië²ˆì§¸ ì¡°ìƒì„ ì˜ë¯¸
 
-ac[ac[x][i-1]][i-1]¸¦ ¸»·Î Ç®¾î¾²¸é xÀÇ 2^(i-1)¹øÂ° Á¶»óÀÇ 2^(i-1)¹øÂ° Á¶»óÀÌ´Ù.
-Áï, xÀÇ 2^(i-1)+2^(i-1)¹øÂ° Á¶»óÀÌ¶ó´Â ¸»ÀÌ±â ¶§¹®¿¡ xÀÇ 2^i¹øÂ° Á¶»óÀÌ¶ó´Â ¸»°ú °°´Ù. 
-ÀÌ·±½ÄÀ¸·Î ·çÆ®³ëµå·ÎºÎÅÍ ¸®ÇÁ³ëµå±îÁö DFS·Î Å½»öÇÏ¸ç À§ Á¡È­½Ä´ë·Î µ¹¸®°Ô µÇ¸é 
-¸ðµç ³ëµå x¿¡ ´ëÇÏ¿© 2^i¹øÂ° Á¶»óÀ» ±¸ÇÒ ¼ö ÀÖ´Ù.
+ac[ac[x][i-1]][i-1]ë¥¼ ë§ë¡œ í’€ì–´ì“°ë©´ xì˜ 2^(i-1)ë²ˆì§¸ ì¡°ìƒì˜ 2^(i-1)ë²ˆì§¸ ì¡°ìƒì´ë‹¤.
+ì¦‰, xì˜ 2^(i-1)+2^(i-1)ë²ˆì§¸ ì¡°ìƒì´ë¼ëŠ” ë§ì´ê¸° ë•Œë¬¸ì— xì˜ 2^ië²ˆì§¸ ì¡°ìƒì´ë¼ëŠ” ë§ê³¼ ê°™ë‹¤. 
+ì´ëŸ°ì‹ìœ¼ë¡œ ë£¨íŠ¸ë…¸ë“œë¡œë¶€í„° ë¦¬í”„ë…¸ë“œê¹Œì§€ DFSë¡œ íƒìƒ‰í•˜ë©° ìœ„ ì í™”ì‹ëŒ€ë¡œ ëŒë¦¬ê²Œ ë˜ë©´ 
+ëª¨ë“  ë…¸ë“œ xì— ëŒ€í•˜ì—¬ 2^ië²ˆì§¸ ì¡°ìƒì„ êµ¬í•  ìˆ˜ ìžˆë‹¤.
 
 
-make_tree : Ã³À½ ±íÀÌ ¼³Á¤,  dp¸¸µé±â
+make_tree : ì²˜ìŒ ê¹Šì´ ì„¤ì •,  ì¡°ìƒdpë§Œë“¤ê¸°
 */
 
 const int MAX = 100010;
@@ -28,16 +28,16 @@ int dp[MAX][20];
 void make_tree(int a, int parent) {
 
 	depth[a] = depth[parent] + 1;
-	dp[a][0] = parent; // aÀÇ 1¹øÂ° Á¶»ó = parent
+	dp[a][0] = parent; // aì˜ 1ë²ˆì§¸ ì¡°ìƒ = parent
 	
 	for (int i = 1; i < 17; i++) {  // 17 = (int)floor(log2(MAX))
 		dp[a][i] = dp[dp[a][i - 1]][i - 1]; //2^i = 2^(i-1)+2^(i-1)
 	}
 
 	for (int i = 0; i < arr[a].size(); i++) {   
-		//¾ç¹æÇâ ±×·¡ÇÁ¿¡¼­ ´Ü¹æÇâ ±×·¡ÇÁ Áï, Æ®¸®·Î »ý¼º
-		if (arr[a][i] != parent) {  //aÀÇ Á¶»óÀÌ ¼³Á¤ ¾ÈµÇÀÖÀ¸¸é 
-			make_tree(arr[a][i], a);  //¼³Á¤ÇØÁØ´Ù
+		//ì–‘ë°©í–¥ ê·¸ëž˜í”„ì—ì„œ ë‹¨ë°©í–¥ ê·¸ëž˜í”„ ì¦‰, íŠ¸ë¦¬ë¡œ ìƒì„±
+		if (arr[a][i] != parent) {  //aì˜ ì¡°ìƒì´ ì„¤ì • ì•ˆë˜ìžˆìœ¼ë©´ 
+			make_tree(arr[a][i], a);  //ì„¤ì •í•´ì¤€ë‹¤
 		}
 	}
 
@@ -55,7 +55,7 @@ int main() {
 		arr[b].push_back(a);
 	}
 	depth[0] = -1;
-	make_tree(1, 0);  //·çÆ®³ëµå´Â 1 ·çÆ®³ëµåÀÇ ºÎ¸ð´Â 0À¸·Î ÃÊ±âÈ­µÇ¾ßÇÔ
+	make_tree(1, 0);  //ë£¨íŠ¸ë…¸ë“œëŠ” 1 ë£¨íŠ¸ë…¸ë“œì˜ ë¶€ëª¨ëŠ” 0ìœ¼ë¡œ ì´ˆê¸°í™”ë˜ì•¼í•¨
 
 
 	scanf("%d", &m);
