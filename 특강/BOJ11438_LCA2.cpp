@@ -36,7 +36,7 @@ void make_tree(int a, int parent) {
 
 	for (int i = 0; i < arr[a].size(); i++) {   
 		//양방향 그래프에서 단방향 그래프 즉, 트리로 생성
-		if (arr[a][i] != parent) {  //a의 조상이 설정 안되있으면 
+		if (arr[a][i] != parent) {  // //a노드와 이어져있는 노드가 부모가 아니라면 
 			make_tree(arr[a][i], a);  //설정해준다
 		}
 	}
