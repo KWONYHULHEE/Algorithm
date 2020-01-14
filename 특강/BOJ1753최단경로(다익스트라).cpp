@@ -7,7 +7,7 @@
 using namespace std;
 
 /*
-	다익스트라 알고리즘 
+다익스트라 알고리즘
 */
 
 const int MAX = 20010;
@@ -38,17 +38,11 @@ int main()
 
 	dist[start] = 0;//시작점은 0
 	pq.push(make_pair(0, start));//(가중치(dist[start]), v(dist[start]))로 넣는다. -> 우선순위가 v순서대로
-	
+
 	while (!pq.empty())
 	{
-		int cur;
-		
-		do//cur이 이미 방문한 점이면 POP
-		{
-			cur = pq.top().second;
-			pq.pop();
-
-		} while (!pq.empty() && visit[cur]);
+		int cur = pq.top().second;
+		pq.pop();
 
 		if (!visit[cur])
 		{
@@ -66,8 +60,6 @@ int main()
 				}
 			}
 		}
-		else//방문할 정점 없므연 종료
-			break;
 	}
 
 	for (int i = 1; i <= V; i++)
