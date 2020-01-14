@@ -31,7 +31,8 @@ int main() {
 
 	for (int i = 0; i < edge; i++) {    // from vertex에서 to vertex 입력, 가중치 입력
 		cin >> from >> to >> weight;
-		if (arr[from][to] > weight)
+		if (arr[from][to] > weight) 
+			//서로 다른 두 정점 사이에 여러 개의 간선이 존재할 수도 있음에 유의한다.
 			arr[from][to] = weight;
 	}
 
