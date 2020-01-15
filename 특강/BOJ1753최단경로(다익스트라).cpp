@@ -1,72 +1,71 @@
-#include <iostream>
-#include <algorithm>
+#include <cstdio>
 #include <vector>
 #include <queue>
+#include <limits.h>
 #include <functional>
-#include <cstring>
 using namespace std;
-
-/*
-다익스트라 알고리즘
-*/
-
-const int MAX = 20010;
-const int INF = 10000000;
-vector <pair<int, int>> graph[MAX];//연결점, 가중치
-int V, E;
-int dist[MAX];
-bool visit[MAX] = { 0, };
+ 
+const int MAX = 20001;
+const int INF = 987654321;
+vector< pair<int, int>> adj[20001]; 
+int dist[20001];
+priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int>> > pq;
 
 int main()
-{
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+{    
+ 
+    int V, E, start;
+    
+    scanf("%d %d", &V, &E);    
+    scanf("%d", &start);    
+    
+ 
+    for (int i = 0; i < E; i++)
+    {
+        int from, to, val;
+        scanf("%d %d %d", &from, &to, &val);
+ 
+        adj[from].push_back(make_pair(to, val));
+    }
 
-	int u, v, w;
-	int start;
-	priority_queue<int, vector<pair<int, int>>, greater<pair<int, int>>> pq;//최소힙
-
-	cin >> V >> E >> start;
 
 	fill(dist, dist + MAX, INF);
 
-	for (int i = 0; i < E; i++)
-	{
-		cin >> u >> v >> w;
-		graph[u].push_back(make_pair(v, w));
-	}
-
-	dist[start] = 0;//시작점은 0
-	pq.push(make_pair(0, start));//(가중치(dist[start]), v(dist[start]))로 넣는다. -> 우선순위가 v순서대로
+	dist[start] = 0;
+	pq.push(make_pair(0, start));
+	
 
 	while (!pq.empty())
 	{
+		int cost = pq.top().first;
+		int here = pq.top().second;
 
-			int cur = pq.top().second;
-			pq.pop();
-			visit[cur] = true;
+		pq.pop();
 
-			for (int i = 0; i < graph[cur].size(); i++)
+		// 만약 지금 꺼낸 것보다 더 짧은 경로를 알고 있다면 지금 꺼낸것을 무시한다.
+		if (dist[here] < cost)
+			continue;
+
+		// 인접한 정점들을 모두 검사.
+		for (int i = 0; i < adj[here].size(); i++)
+		{
+			int there = adj[here][i].first;
+			int nextDist = cost + adj[here][i].second;
+
+			// 더 짧은 경로를 발견하면, dist[]를 갱신하고 우선순위 큐에 넣는다.
+			if (dist[there] > nextDist)
 			{
-				int next = graph[cur][i].first;
-				int d = graph[cur][i].second;
+				dist[there] = nextDist;
+				pq.push(make_pair(nextDist, there));
 
-				if (!visit[next]&&dist[next] > dist[cur] + d)
-				{
-					dist[next] = dist[cur] + d;
-					pq.push(make_pair(dist[next], next));
-				}
 			}
 		}
-	
-
-	for (int i = 1; i <= V; i++)
-	{
-		if (dist[i] != INF)
-			cout << dist[i] << "\n";
-		else
-			cout << "INF\n";
 	}
 
-	return 0;
+ 
+    for (int i = 1; i <=V; i++)
+        dist[i] == INF ? printf("INF\n") : printf("%d\n", dist[i]);
+    
+    return 0;
 }
+
