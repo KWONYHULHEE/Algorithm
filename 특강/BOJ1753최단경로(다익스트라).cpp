@@ -7,12 +7,12 @@
 using namespace std;
 
 /*
-´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò
+ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜
 */
 
 const int MAX = 20010;
 const int INF = 10000000;
-vector <pair<int, int>> graph[MAX];//¿¬°áÁ¡, °¡ÁßÄ¡
+vector <pair<int, int>> graph[MAX];//ì—°ê²°ì , ê°€ì¤‘ì¹˜
 int V, E;
 int dist[MAX];
 bool visit[MAX] = { 0, };
@@ -24,7 +24,7 @@ int main()
 
 	int u, v, w;
 	int start;
-	priority_queue<int, vector<pair<int, int>>, greater<pair<int, int>>> pq;//ÃÖ¼ÒÈü
+	priority_queue<int, vector<pair<int, int>>, greater<pair<int, int>>> pq;//ìµœì†Œí™
 
 	cin >> V >> E >> start;
 
@@ -36,16 +36,14 @@ int main()
 		graph[u].push_back(make_pair(v, w));
 	}
 
-	dist[start] = 0;//½ÃÀÛÁ¡Àº 0
-	pq.push(make_pair(0, start));//(°¡ÁßÄ¡(dist[start]), v(dist[start]))·Î ³Ö´Â´Ù. -> ¿ì¼±¼øÀ§°¡ v¼ø¼­´ë·Î
+	dist[start] = 0;//ì‹œì‘ì ì€ 0
+	pq.push(make_pair(0, start));//(ê°€ì¤‘ì¹˜(dist[start]), v(dist[start]))ë¡œ ë„£ëŠ”ë‹¤. -> ìš°ì„ ìˆœìœ„ê°€ vìˆœì„œëŒ€ë¡œ
 
 	while (!pq.empty())
 	{
-		int cur = pq.top().second;
-		pq.pop();
 
-		if (!visit[cur])
-		{
+			int cur = pq.top().second;
+			pq.pop();
 			visit[cur] = true;
 
 			for (int i = 0; i < graph[cur].size(); i++)
@@ -53,14 +51,14 @@ int main()
 				int next = graph[cur][i].first;
 				int d = graph[cur][i].second;
 
-				if (dist[next] > dist[cur] + d)
+				if (!visit[next]&&dist[next] > dist[cur] + d)
 				{
 					dist[next] = dist[cur] + d;
 					pq.push(make_pair(dist[next], next));
 				}
 			}
 		}
-	}
+	
 
 	for (int i = 1; i <= V; i++)
 	{
