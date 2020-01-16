@@ -5,11 +5,10 @@ using namespace std;
 int N, M;
 
 int mem[101], cost[101];
-int dp[10101];
+int dp[101][10101];
 
 /*
-dp[i] = iºñ¿ëÀ¸·Î Áö¿ï¼öÀÖ´Â ÃÖ´ë¸Þ¸ð¸®
-
+dp[i] = ië¹„ìš©ìœ¼ë¡œ ì§€ìš¸ìˆ˜ìžˆëŠ” ìµœëŒ€ë©”ëª¨ë¦¬
 
 */
 
@@ -17,7 +16,7 @@ int main() {
 
 	int cost_sum = 0;
 
-	scanf("%d%d", &N, &M);
+	scanf("%d %d", &N, &M);
 
 	for (int i = 1; i <= N; i++)
 
@@ -28,37 +27,28 @@ int main() {
 		scanf("%d", &cost[i]), cost_sum += cost[i];
 
 
+	int ans = 987654321;
 	for (int i = 1; i <= N; i++) {
-		
-		for (int c = cost_sum; c >= cost[i]; c--) {
+		for (int j = 0; j <= cost_sum; j++) {
+			if (j < cost[i]) dp[i][j] = dp[i - 1][j];
+			else dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - cost[i]] + mem[i]);
 
-	
-			dp[c] = max(dp[c], dp[c - cost[i]] + mem[i]);
-
-			//c - cost[i] ¿¡¼­ cost[i]°¡ Å«°ªÀÌ¿©¾ß ÀÛÀº dpºÎÅÍ ½ÃÀÛÇÏ´Â°Å
-			//»õ·Î¿î ¿ø¼Ò¸¦ ³ÖÀ¸¸ç ¾÷µ¥ÀÌÆ® ÇÒ¶§´Â µÚ¿¡¼­ ºÎÅÍ ¾÷µ¥ÀÌÆ®ÇØ¾ß °ãÄ¡Áö ¾ÊÀ» ¼ö ÀÖ´Ù!
-
-
+			if (dp[i][j] >= M && j < ans) ans = j;
 		}
-
 	}
 
-	int ans;
-
-	for (int c = 0; c <= cost_sum; c++) {
-
-		if (dp[c] >= M) {
-
-			ans = c;
-
-			break;
-
-		}
-
-	}
 
 	printf("%d\n", ans);
 
 	return 0;
 
 }
+
+
+/*
+
+5 60
+30 10 20 35 40
+3 0 3 5 4
+
+*/
