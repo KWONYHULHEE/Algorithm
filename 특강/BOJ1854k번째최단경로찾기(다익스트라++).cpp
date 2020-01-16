@@ -48,8 +48,8 @@ int main()
 				pq.push({ nextCost + cost, next });
 			}
 			else if (dist[next].top() > nextCost + cost)
-				//2. k°³ÀÇ °æ·Î°¡ ÀÌ¹Ì Á¸ÀçÇÒ °æ¿ì heapÀÇ root ³ëµå°¡ k¹øÂ° ÃÖ´Ü°æ·Î°¡ µÈ´Ù.
-				//ÀÌ °æ·Îº¸´Ù ÀÛÀº °æ¿ì ±âÁ¸ÀÇ k¹øÂ° °æ·Î¸¦ Á¦°ÅÇÏ°í ³Ö¾îÁØ´Ù.
+				//2. kê°œì˜ ê²½ë¡œê°€ ì´ë¯¸ ì¡´ìž¬í•  ê²½ìš° heapì˜ root ë…¸ë“œê°€ kë²ˆì§¸ ìµœë‹¨ê²½ë¡œê°€ ëœë‹¤.
+				//ì´ ê²½ë¡œë³´ë‹¤ ìž‘ì€ ê²½ìš° ê¸°ì¡´ì˜ kë²ˆì§¸ ê²½ë¡œë¥¼ ì œê±°í•˜ê³  ë„£ì–´ì¤€ë‹¤.
 			{
 				dist[next].pop();
 				dist[next].push(nextCost + cost);
