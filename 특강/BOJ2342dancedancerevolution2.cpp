@@ -1,47 +1,51 @@
 #include <iostream>
+#include <cstring>
 #include <algorithm>
-#define MAX 99999999
-#pragma warning(disable:4996)
 using namespace std;
 
-int n, ddr[100001], dp[5][5][100001];
+const int MAX = 100010;
+int arr[MAX];
+int dp[5][5][MAX];
 
-int from_to(int p1, int p2)
-{
-	if (p1 == 0)
-		return 2;
-	if (abs(p1 - p2) == 2)
-		return 4;
+int force(int a, int b) {
+	
+	if (a == 0) return 2;
+	if (abs(a - b) == 2) return 4;
+	if (a == b) return 1;
 	return 3;
 }
 
-int moving(int pre, int next, int cur)
-{
-	if (ddr[cur] == 0)
-		return 0;
+int solve(int left, int right, int cur) { //cur=현재index pre,next=왼발 오른발
 
-	int& ret = dp[pre][next][cur];
-	if (ret) return ret;
+	if (arr[cur] == 0) return 0;
+	
+	int& ret = dp[left][right][cur];
+	if (ret != -1) return ret;
 
 
-	if (next == ddr[cur] || pre == ddr[cur])
-		ret = moving(pre, next, cur + 1) + 1;
-	else
-	{
-		ret = from_to(pre, ddr[cur]) + moving(ddr[cur], next, cur + 1);
-		ret = min(ret, from_to(next, ddr[cur]) + moving(pre, ddr[cur], cur + 1));
-	}
+	ret = force(left, arr[cur]) + solve(arr[cur], right, cur + 1);  //왼발로 움직였을때 
+	ret = min(ret, force(right, arr[cur]) + solve(left, arr[cur], cur + 1)); //오른발로 
+
 	return ret;
-}
 
-int main()
-{
-	n = 0;
-	while (1)
-	{
-		scanf("%d", &ddr[n++]);
-		if (ddr[n - 1] == 0)
-			break;
+}
+int main() {
+
+
+	int index = 0;
+
+	while (1) {
+		int a;
+		cin >> a;
+		arr[index++] = a;
+		if (a == 0) break;
 	}
-	printf("%d", moving(0, 0, 0));
+
+	memset(dp, -1, sizeof(dp));
+
+	cout<<solve(0,0,0)<<"\n";
+
+
+
+	return 0;
 }
