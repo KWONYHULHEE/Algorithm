@@ -1,18 +1,13 @@
 #include <iostream>
 #include <queue>
+#include <map>
 #include <vector>
 #include <algorithm>
 #include <functional>
 using namespace std;
 
-/*
-소수의 곱을 우선순위 큐에 입력하는데 우선순위 큐의 크기가 N을 초과하고 우선순위 큐 내 최댓값보다 현재 숫자가 더 크면 삽입하지 않습니다.
--> 우선순위 큐 내 최댓값보다 현재 숫자가 작으면 현재 숫자가 더 먼저 등장하므로 우선순위 큐에 넣습니다.
- 반복문을 탈출한 뒤 우선순위 큐의 top을 출력합니다.
- */
-
 const int MAX = 110;
-bool check[100010];
+map<long long, bool> visited;
 long long arr[MAX];
 
 
@@ -45,9 +40,9 @@ int main() {
 			if (next > maxvalue && pq.size() > n) //pq 안에 있는 숫자들 중 최댓값보다 크고 pq의 크기가 N을 넘으면 더 이상 숫자를 넣을 필요가 없다
 				continue;
 
-			if (!check[next]) {
+			if (!visited[next]) {  //key(키값)에 해당하는 원소들(value들)의 개수를 반환
 				maxvalue = max(maxvalue, next);
-				check[next] = true;
+				visited[next] = true;
 				pq.push(next);
 			}
 		}
