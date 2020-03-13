@@ -1,100 +1,101 @@
-#include <stdio.h>
+#include <iostream>
+#include <string.h>
+using namespace std;
+
 
 int n, m;
-const int MAX = 310;
-int arr[MAX][MAX];
-int copy[MAX][MAX];
-int group = 0;
-bool check[MAX][MAX];
-int dx[] = { -1,1,0,0 };
-int dy[] = { 0,0,1,-1 };
+int arr[310][310];
+int str[310][310];
+bool check2[310][310];
+int cnt = 0;
+int dx[] = {0, 0, -1, 1};
+int dy[] = { -1,1,0,0 };
 
-int melt(int x, int y) {
-	int cnt = 0;
-
-	for (int i = 0; i < 4; i++) {
-		int a = x + dx[i];
-		int b = y + dy[i];
-
-		if (a < 0 || b < 0 || a >= n || b >= m) continue;
-		if (arr[a][b] == 0)
-			cnt++;
-	}
-
-	return cnt;
-}
-
-void dfs(int x, int y) {
-	check[x][y] = true;
+void divide(int x, int y) {
+	
+	check2[x][y] = true;
 
 	for (int i = 0; i < 4; i++) {
-		int a = x + dx[i];
-		int b = y + dy[i];
 
-		if (a < 0 || b < 0 || a >= n || b >= m)continue;
+		int nx = x + dx[i];
+		int ny = y + dy[i];
 
-		if (copy[a][b] != 0 && check[a][b] == false)
-			dfs(a, b);
+		if (nx < 0 || ny < 0 || nx >= n || ny >= m || check2[nx][ny] || arr[nx][ny]==0) continue;
+
+		divide(nx, ny);
 	}
-}
 
+}
+void melt(int x, int y) {
+
+
+	for (int i = 0; i < 4; i++) {
+
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+
+		if (nx < 0 || ny < 0 || nx >= n || ny >= m || arr[nx][ny]!=0) continue;
+		if (str[x][y] <= 0) break;
+		
+		str[x][y]--;
+	}
+
+
+}
 int main() {
+	
+	cin >> n >> m;
+	
 
-	scanf("%d %d", &n, &m);
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			scanf("%d", &arr[i][j]);
-			copy[i][j] = arr[i][j];
+			cin >> arr[i][j];
+			str[i][j] = arr[i][j];
 		}
 	}
-	int count = 0;
-
+	
+	int time = 0;
 
 	while (1) {
+		
+		memset(check2, false, sizeof(check2));
+		cnt = 0;
 
-		// bool check2[MAX][MAX]={0, };
-		count++;
+		for (int i = 0; i < n; i++) {  //몇개로 분리됬는지 확인
+			for (int j = 0; j < m; j++) {
+				if (arr[i][j] != 0 && !check2[i][j]) {
+					divide(i, j);
+					cnt++;
+				}
+			}
+		}
 
-		for (int i = 0; i < n; i++) {
+		if (cnt >= 2) break;  //2개이상으로 분리됬으면 종료
+		if (cnt == 0) { //다 0 이면 0출력
+			cout << "0" << "\n";
+			return 0;
+		}
+
+
+		for (int i = 0; i < n; i++) {  //녹이기 
 			for (int j = 0; j < m; j++) {
 				if (arr[i][j] != 0) {
-					// check2[i][j]=true;
-					copy[i][j] -= melt(i, j);
-					if (copy[i][j] < 0)
-						copy[i][j] = 0;
+					melt(i, j);
 				}
 			}
 		}
+		
+		time++;
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) {  //녹인거 업데이트
 			for (int j = 0; j < m; j++) {
-				if (copy[i][j] != 0 && check[i][j] == false) {
-					dfs(i, j);
-					group++;
-				}
+				arr[i][j] = str[i][j];
 			}
 		}
 
-
-		if (group == 0) {
-			printf("0");
-			return 0;
-		}
-
-
-		if (group >= 2) {
-			printf("%d", count);
-			return 0;
-		}
-
-		group = 0;                           //�ʱ�ȭ
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				arr[i][j] = copy[i][j];
-				check[i][j] = false;
-			}
-		}
 	}
+
+	cout << time;
 
 	return 0;
 }
