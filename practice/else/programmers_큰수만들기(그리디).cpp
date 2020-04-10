@@ -4,10 +4,10 @@
 using namespace std;
 
 string solution(string number, int k) {
-	// 1. ½ºÅÃ »ı¼º
+	// 1. ìŠ¤íƒ ìƒì„±
 	vector<char> st;
 
-	// 2. ¾ÕÀÚ¸®°¡ °¡Àå Å« ¼ö°¡ µÇ°Ô²û ½ºÅÃ¿¡ µ¥ÀÌÅÍ ÀúÀå
+	// 2. ì•ìë¦¬ê°€ ê°€ì¥ í° ìˆ˜ê°€ ë˜ê²Œë” ìŠ¤íƒì— ë°ì´í„° ì €ì¥
 	for (auto elem : number) {
 		while (!st.empty() && st.back() < elem && k > 0) {
 			st.pop_back();
@@ -16,13 +16,13 @@ string solution(string number, int k) {
 		st.push_back(elem);
 	}
 
-	// 3. k°¡ ³²¾Ò´Ù¸é, ½ºÅÃ µÚ¿¡¼­ k°³ »©ÁÜ
+	// 3. kê°€ ë‚¨ì•˜ë‹¤ë©´, ìŠ¤íƒ ë’¤ì—ì„œ kê°œ ë¹¼ì¤Œ
 	while (k > 0) {
 		st.pop_back();
 		k -= 1;
 	}
 
-	string answer = "";
+	string answer = ""; 
 
 	for (auto elem : st) {
 		answer += elem;
