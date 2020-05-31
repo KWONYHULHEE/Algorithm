@@ -1,36 +1,47 @@
 #include <iostream>
-#include <cstdio>
+#include <string>
 #include <algorithm>
+#include <vector>
 using namespace std;
+
 
 int n, m;
 int arr[60][60];
 
-int main() {
+int main(void) {
+
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
 	cin >> n >> m;
 
 	for (int i = 0; i < n; i++) {
+		string temp;
+		cin >> temp;
 		for (int j = 0; j < m; j++) {
-			scanf("%1d", &arr[i][j]);
+			arr[i][j] = temp[j] - '0';
 		}
 	}
-	int num = max(n, m);
-	int res = -1;
-	for (int k = 1; k <= num; k++) {
 
+	int cnt = 1;
+
+	for (int k = 1; k <= min(n, m); k++) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				if ((i + k - 1) >= n || (j + k - 1) >= m) continue;
-				int value = arr[i][j];
-				if (arr[i][j + k - 1] != value) continue;
-				if (arr[i + k - 1][j] != value) continue;
-				if (arr[i + k - 1][j + k - 1] != value) continue;
+				int temp = arr[i][j];
+				if (i + k >= n || j + k >= m) continue;
+				if (arr[i][j + k] != temp) continue;
+				if (arr[i + k][j] != temp) continue;
+				if (arr[i + k][j + k] != temp) continue;
 
-				if (res < k) res = k;
+				if (cnt < k + 1) cnt = k + 1;
+					
 			}
 		}
 	}
-	cout << res*res;
-	
+	cout << cnt * cnt;
+
 	return 0;
+
 }
+
