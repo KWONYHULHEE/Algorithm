@@ -1,55 +1,50 @@
 #include <iostream>
+#include <cstring>
 #include <algorithm>
-#include <cstring> //memset
+#include <vector>
 using namespace std;
-
-
-
 const int INF = 987654321;
-const int MAX = 1000;
-
-
-int N;
+const int MAX = 1010;
+int n;
 int arr[MAX];
-int cache[MAX];
+int dp[MAX];
 
 
-int minJump(int start){
+int dfs(int x) {
+	if (x == n - 1) return 0;
+	if (x >= n) return INF;
 
-	if (start == N - 1) return 0; //목적지 도달할 경우
-	if (start >= N) return INF; //목적지 도달 못할 경우
+	int &ret = dp[x];
+	if (ret != -1) return ret;
 
+	ret = INF;
 
-	int &result = cache[start];
-	if (result != -1) return result;
+	for (int i = 1; i <= arr[x]; i++) {
+		ret = min(ret, 1 + dfs(x + i));
+	}
 
-	result = INF;
-
-	for (int i = 1; i <= arr[start]; i++) //arr[start]이하 갈 수 있으므로
-		result = min(result, 1 + minJump(start + i));
-
-	return result;
+	return ret;
 
 }
+int main(void) {
 
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
 
-
-int main(void){
-
-	cin >> N;
-
-	for (int i = 0; i < N; i++)
+	cin >> n;
+	for (int i = 0; i < n; i++) {
 		cin >> arr[i];
+	}
 
+	memset(dp, -1, sizeof(dp));
 
+	int ans = dfs(0);
 
-	memset(cache, -1, sizeof(cache));
-
-	int result = minJump(0);
-
-	if (result == INF)	cout << -1 << endl;
-	else cout << result << endl;
+	
+	if (ans == INF) cout << -1 << "\n";
+	else cout << ans << "\n";
 
 	return 0;
 
 }
+
