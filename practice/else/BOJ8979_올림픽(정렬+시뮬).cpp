@@ -1,16 +1,18 @@
 #include <iostream>
-#include <vector>
+#include <string>
 #include <algorithm>
+#include <queue>
 using namespace std;
 
 struct Medal {
-	int num;
+	int nation;
 	int gold;
 	int silver;
 	int bronze;
 };
-vector <Medal> medal;
+vector <Medal> v;
 int n, k;
+
 bool cmp(Medal x, Medal y) {
 	if (x.gold >= y.gold) {
 		if (x.gold == y.gold) {
@@ -29,42 +31,40 @@ bool cmp(Medal x, Medal y) {
 	}
 	return false;
 }
-int main() {
+int main(void) {
 
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
 	
 	cin >> n >> k;
-
 	for (int i = 0; i < n; i++) {
 		int a, b, c, d;
 		cin >> a >> b >> c >> d;
-		medal.push_back({ a,b,c,d });
-
+		v.push_back({ a,b,c,d });
 	}
-	sort(medal.begin(), medal.end() , cmp);
 
-	int rank = 1;
-	Medal prev = medal[0];
+	sort(v.begin(), v.end(), cmp);
+
+	Medal prev = v[0];
 	int res = 0;
+	int rank = 1;
 
-	for (int i = 0; i < medal.size(); i++) {
-
-		if (medal[i].gold != prev.gold || medal[i].silver != prev.silver
-			|| medal[i].bronze != prev.bronze) {
+	for (int i = 0; i < n; i++) {
+		if (v[i].gold != prev.gold || v[i].silver != prev.silver
+			|| v[i].bronze != prev.bronze)
 			rank = i + 1;
-		}
 
-		prev.gold = medal[i].gold;
-		prev.silver = medal[i].silver;
-		prev.bronze = medal[i].bronze;
+		prev.gold = v[i].gold;
+		prev.silver = v[i].silver;
+		prev.bronze = v[i].bronze;
 
-		if (k == medal[i].num) {
+		if (k == v[i].nation) {
 			res = rank;
 			break;
 		}
-
 	}
-
 	cout << res;
-
 	return 0;
+
 }
+
